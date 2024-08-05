@@ -1,9 +1,10 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const { v4: uuidv4 } = require("uuid");
-
 const app = express();
 
 app.use(express.json());
@@ -29,16 +30,10 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://artakartakyan2:Botoyan2020@social-app.cccxlzn.mongodb.net/app"
-  )
+  .connect(process.env.MONGO_DB_URI)
   .then(() => {
     app.listen(8080);
   })
   .catch((err) => console.log(err));
 
-//TODO need to see the sendgrid to make it work for reset password,
-//TODO need to implement reset password backend and frontend
-//TODO need to set auto logout after 2 hours in signin page frontend
-//TODO need to create design for homepage frontend, add log out button and everything
-//TODO need to simplify the code everywhere
+/* TODO need to simplify the code everywhere */

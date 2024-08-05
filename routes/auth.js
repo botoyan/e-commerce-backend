@@ -24,6 +24,23 @@ router.post(
   authController.signup
 );
 
-router.post("/login", authController.login);
+router.post("/sign-in", authController.signin);
+
+router.post(
+  "/reset-password",
+  [
+    body("email")
+      .isEmail()
+      .withMessage("Please provided a valid emaill address")
+      .normalizeEmail(),
+  ],
+  authController.resetPassword
+);
+
+router.put(
+  "/change-password",
+  [body("password").trim().isLength({ min: 8 })],
+  authController.changePassword
+);
 
 module.exports = router;
